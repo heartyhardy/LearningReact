@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
 import CardList from './cardlist';
 import SearchBox from './searchbox';
-
+import Scroll from './scroll';
+import ErrorBoundry from './errorboundry';
 
 class App extends Component {
     
@@ -33,16 +34,19 @@ class App extends Component {
             return robot.name.toLocaleLowerCase().includes(this.state.searchfield.toLocaleLowerCase());
         });
 
-        if(this.state.robots.length === 0)
-            return <h1>Loading...</h1>
-        else
-        return(
-            <div>
-                <h2>Robo Gallery</h2>
-                <SearchBox searchChange={this.OnSearchChange}/>
-                <CardList robots={filteredrobots}/>
-            </div>       
-        );        
+        return (!this.state.robots.length)?
+            <h1>Loading...</h1>:
+            (
+                <div>
+                    <h2>Robo Gallery</h2>
+                    <SearchBox searchChange={this.OnSearchChange}/>
+                        <ErrorBoundry>
+                        <Scroll>
+                            <CardList robots={filteredrobots}/>
+                        </Scroll>
+                    </ErrorBoundry>
+                </div>       
+            );        
     }
 }
 

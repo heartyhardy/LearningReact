@@ -33,6 +33,9 @@ class App extends Component {
             return robot.name.toLocaleLowerCase().includes(this.state.searchfield.toLocaleLowerCase());
         });
 
+        if(this.state.robots.length === 0)
+            return <h1>Loading...</h1>
+        else
         return(
             <div>
                 <h2>Robo Gallery</h2>
